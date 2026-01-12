@@ -8,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    # ⬇️ THIS IS THE FIX: We tell it to work inside your subfolder
+    defaults:
+      run:
+        working-directory: ./vpn_apk
 
     steps:
     - uses: actions/checkout@v3
@@ -27,4 +32,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: vpn-app-release
-        path: build/app/outputs/flutter-apk/app-release.apk
+        # ⬇️ We also updated the path here to include the folder
+        path: vpn_apk/build/app/outputs/flutter-apk/app-release.apk
