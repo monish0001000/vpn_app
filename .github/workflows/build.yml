@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-    # ⬇️ THIS IS THE FIX: We tell it to work inside your subfolder
+    # We keep this because your files are in the vpn_apk folder
     defaults:
       run:
         working-directory: ./vpn_apk
@@ -21,6 +21,12 @@ jobs:
       with:
         flutter-version: '3.19.0'
         channel: 'stable'
+
+    # ⬇️ THIS IS THE NEW FIX ⬇️
+    - name: Repair Android Project
+      run: |
+        rm -rf android
+        flutter create . --platforms=android
     
     - name: Get Dependencies
       run: flutter pub get
@@ -32,5 +38,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: vpn-app-release
-        # ⬇️ We also updated the path here to include the folder
         path: vpn_apk/build/app/outputs/flutter-apk/app-release.apk
